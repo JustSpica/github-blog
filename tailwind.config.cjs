@@ -19,7 +19,11 @@ module.exports = {
     fontFamily: {
       sans: "Nunito, sans-serif",
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        header: "url('src/assets/svgs/header-background.svg')",
+      },
+    },
   },
   plugins: [],
 };
