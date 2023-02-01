@@ -42,7 +42,9 @@ export function HeaderData({ github, name }: ProfileHeaderDataProps) {
       <strong className="font-bold text-2xl text-slate-50">{name}</strong>
       <a
         href={github}
+        target="_blank"
         className="flex items-start gap-2 uppercase font-bold text-xs text-blue-500 hover:underline"
+        rel="noreferrer"
       >
         Github <BsBoxArrowUpRight size={12} />
       </a>
