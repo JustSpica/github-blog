@@ -5,20 +5,14 @@ import { FaGithub, FaUserFriends } from "react-icons/fa";
 
 export function Profile() {
   return (
-    <div
-      className="-mt-16 p-8 bg-slate-700 flex gap-8 rounded-xl 
-    shadow-slate-900 shadow-lg"
-    >
+    <div className="-mt-16 p-8 bg-slate-700 flex gap-8 rounded-xl shadow-slate-900 shadow-lg">
       <img className="w-36 h-36 bg-slate-50 rounded-lg" src="" alt="" />
       <div className="flex-1 flex flex-col justify-between">
         <header className="w-full flex justify-between">
           <strong className="font-bold text-2xl text-slate-50">
             Cameron Williamson
           </strong>
-          <a
-            className="flex items-start gap-2 uppercase font-bold text-xs 
-          text-blue-500"
-          >
+          <a className="flex items-start gap-2 uppercase font-bold text-xs text-blue-500">
             Github <BsBoxArrowUpRight size={12} />
           </a>
         </header>
