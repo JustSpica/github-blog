@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { useQuery } from "react-query";
 
@@ -14,6 +15,8 @@ export function Home() {
   const [content, setContenet] = useState("");
   const debouncedContent = useDebounce(content, 1500);
 
+  const navigate = useNavigate();
+
   const { data: issues, isLoading } = useQuery(
     ["shortIssues", debouncedContent],
     () => findIssuesByContent(debouncedContent),
@@ -24,6 +27,10 @@ export function Home() {
 
   function handleChangeContent(event: React.ChangeEvent<HTMLInputElement>) {
     setContenet(event.target.value);
+  }
+
+  function handleChangeToIssueRoute(issueNumber: number) {
+    navigate(`/issue/${issueNumber}`);
   }
 
   const hasAnyIssues = !!issues && issues.items.length > 0;
@@ -62,6 +69,7 @@ export function Home() {
                 createdAt={issue.created_at}
                 description={issue.body}
                 title={issue.title}
+                onClick={() => handleChangeToIssueRoute(issue.number)}
               />
             ))}
         </div>
