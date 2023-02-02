@@ -1,23 +1,20 @@
 import React, { useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import { useQuery } from "react-query";
 
 import { useDebounce } from "hooks/useDebounce";
 
-import { findUser, findIssuesByContent } from "services/github";
+import { findIssuesByContent } from "services/github";
 
 import { Input } from "./components/Input";
 import { Post } from "./components/Post";
-import * as Profile from "./components/Profile";
+import { Profile } from "./components/Profile";
 
 export function Home() {
   const [content, setContenet] = useState("");
   const debouncedContent = useDebounce(content, 1500);
 
-  const { data: user } = useQuery("users", () => findUser(), {
-    refetchOnWindowFocus: false,
-  });
-
-  const { data: issues } = useQuery(
+  const { data: issues, isLoading } = useQuery(
     ["shortIssues", debouncedContent],
     () => findIssuesByContent(debouncedContent),
     {
@@ -29,26 +26,11 @@ export function Home() {
     setContenet(event.target.value);
   }
 
-  const hasUserData = !!user;
   const hasAnyIssues = !!issues && issues.items.length > 0;
 
   return (
     <section className="w-full pb-12 max-w-[864px] m-auto">
-      {hasUserData && (
-        <Profile.Root>
-          <Profile.Avatar url={user.avatar_url} />
-          <Profile.Content>
-            <Profile.HeaderData github={user.html_url} name={user.name} />
-            <Profile.Description>{user.bio}</Profile.Description>
-            <Profile.FooterData
-              company={user.company}
-              followers={user.followers}
-              nick={user.login}
-            />
-          </Profile.Content>
-        </Profile.Root>
-      )}
-
+      <Profile />
       <div className="w-full mt-16">
         <div>
           <header className="flex items-center justify-between">
@@ -64,7 +46,16 @@ export function Home() {
           />
         </div>
         <div className="mt-12 grid grid-cols-2 gap-8">
-          {hasAnyIssues ? (
+          {isLoading &&
+            [...Array(6)].map((_, index) => (
+              <Skeleton
+                key={index}
+                className="w-full h-[245px] !block cursor-not-allowed"
+                baseColor="#112131"
+                highlightColor="#1C2F41"
+              />
+            ))}
+          {hasAnyIssues &&
             issues.items.map(issue => (
               <Post
                 key={issue.number}
@@ -72,10 +63,7 @@ export function Home() {
                 description={issue.body}
                 title={issue.title}
               />
-            ))
-          ) : (
-            <h1>Nenhum Post</h1>
-          )}
+            ))}
         </div>
       </div>
     </section>
