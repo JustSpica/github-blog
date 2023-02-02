@@ -21,7 +21,7 @@ module.exports = {
         },
       },
       backgroundImage: {
-        header: "url('../public/header-background.svg')",
+        header: "url('/header-background.svg')",
       },
     },
   },

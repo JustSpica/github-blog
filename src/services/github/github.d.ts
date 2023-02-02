@@ -7,3 +7,15 @@ export interface UserData {
   login: string;
   name: string;
 }
+
+interface IssuesItem {
+  body: string;
+  created_at: string;
+  number: number;
+  title: string;
+}
+
+export interface IssuesData {
+  items: IssuesItem[];
+  total_count: number;
+}
