@@ -43,13 +43,9 @@ export async function findIssuesByContent(content: string) {
  */
 
 export async function findIssueByNumber(issue: number) {
-  try {
-    const { data } = await api.get<IssuesItem>(
-      `/repos/JustSpica/github-blog/issues/${issue}`,
-    );
+  const { data } = await api.get<IssuesItem>(
+    `/repos/JustSpica/github-blog/issues/${issue}`,
+  );
 
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
+  return data;
 }

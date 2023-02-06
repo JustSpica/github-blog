@@ -1,25 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 
 import { findIssueByNumber } from "services/github";
+import { IssuesItem } from "services/github/github";
 
 import { Header } from "./components/Header";
 import { Markdown } from "./components/Markdown";
 
 export function Issue() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [issue, setIssue] = useState({} as IssuesItem);
   const { issueId } = useParams();
 
-  const { data: issue, isLoading } = useQuery(
-    "issue",
-    () => findIssueByNumber(Number(issueId)),
-    {
-      refetchOnWindowFocus: false,
-    },
-  );
+  async function findIssue() {
+    try {
+      const issueData = await findIssueByNumber(Number(issueId));
+      setIsLoading(false);
+      setIssue(issueData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const isIssueExist = !!issue && Object.keys(issue).length > 0;
+
+  console.log(isLoading);
+
+  console.log(issue);
+
+  useEffect(() => {
+    findIssue();
+  }, []);
 
   return (
     <section className="w-full pb-12 max-w-[864px] m-auto">
