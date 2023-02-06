@@ -12,13 +12,13 @@ export function Profile() {
     refetchOnWindowFocus: false,
   });
 
-  const haveAnyUser = !!user && Object.keys(user)?.length > 0;
+  const haveAnyUser = !!user && Object.keys(user).length > 0;
 
   return isLoading || !haveAnyUser ? (
     <Skeleton
       baseColor="#112131"
       highlightColor="#1C2F41"
-      className="w-full h-52 -mt-16 !block shadow-slate-900 shadow-lg cursor-not-allowed"
+      className="w-full h-52 -mt-16 !block rounded-xl shadow-slate-900 shadow-lg cursor-not-allowed"
     />
   ) : (
     <div className="-mt-16 p-8 bg-slate-700 flex gap-8 rounded-xl shadow-slate-900 shadow-lg">

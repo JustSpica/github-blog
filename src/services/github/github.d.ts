@@ -10,9 +10,12 @@ export interface UserData {
 
 interface IssuesItem {
   body: string;
+  comments: number;
   created_at: string;
+  html_url: string;
   number: number;
   title: string;
+  user: Pick<UserData, "avatar_url" | "html_url" | "login">;
 }
 
 export interface IssuesData {
